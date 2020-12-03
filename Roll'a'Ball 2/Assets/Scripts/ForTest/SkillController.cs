@@ -5,28 +5,55 @@ using UnityEngine.InputSystem;
 
 public class SkillController : MonoBehaviour
 {
-    private float speed = 200;
-    private bool rotation = false;
+    public float speed = 200;
+    public float cameraDistance;
+    public float cameraSpeed;
+    public float power;
 
-    public void Rotate()
+    private bool isCharge = false;
+    //private Vector3 cameraVector;
+    private Animator camShake;
+
+    private void Awake()
     {
-        this.rotation = true;
+        //cameraVector = Camera.main.transform.forward;
+        //cameraStartPos = Camera.main.transform.localPosition.z;
+        camShake = Camera.main.GetComponent<Animator>();
     }
 
-    public void StopRotating()
+    public void ChargePrepare()
     {
-        this.rotation = false;
+        this.isCharge = true;
+        //cameraStartPos = Camera.main.transform.localPosition.z;
+        camShake.SetTrigger("Shakes");
+    }
+
+    public void StopCharge()
+    {
+        this.isCharge = false;
+        camShake.SetTrigger("StopShaking");
+
+        gameObject.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * power);
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
-            Rotate();
+            ChargePrepare();
         if (Mouse.current.leftButton.wasReleasedThisFrame)
-            StopRotating();
+            StopCharge();
 
-        if (rotation)
+        //При активном Charge - кручение объекта
+        if (isCharge)
             gameObject.transform.Rotate(new Vector3(speed, 0, 0) * Time.deltaTime);
+
+        //При активном Charge - отдаление камеры (по translate - не работает, если Animator использует position)
+        /*
+        if (isCharge && Camera.main.transform.localPosition.z > cameraStartPos - cameraDistance)
+            Camera.main.transform.Translate(cameraVector, Space.Self);
+        else if (!isCharge && Camera.main.transform.localPosition.z < cameraStartPos)
+            Camera.main.transform.Translate(-cameraVector * 10, Space.Self);
+        */
     }
 }

@@ -21,6 +21,12 @@ public class FollowerSimple : MonoBehaviour
     void LateUpdate()
     {
         transform.position = player.transform.position + (offset * controller.cameraRange);
-        transform.Rotate(0, controller.getCameraMovementX() * MouseSens, 0);
+        if(controller.rotateCamera)
+            transform.Rotate(0, controller.getCameraMovementX() * MouseSens, 0);
+    }
+
+    public Vector3 getCameraPos()
+    {
+        return player.transform.position + (offset * controller.cameraRange);
     }
 }
