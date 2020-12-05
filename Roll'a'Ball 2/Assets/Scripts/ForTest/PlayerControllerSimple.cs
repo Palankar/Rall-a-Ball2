@@ -119,7 +119,6 @@ public class PlayerControllerSimple : MonoBehaviour
         if (other.CompareTag("MusicChanger"))
         {
 
-            Debug.Log("Entered");
             MusicChanger changer = other.GetComponent<MusicChanger>();
 
             foreach (var song in changer.pack)

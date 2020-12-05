@@ -45,15 +45,12 @@ public class VoiceGenerator : MonoBehaviour
     private float[] getPeriods()
     {
         float[] arr = new float[UnityEngine.Random.Range(3, 7)];
-        Debug.Log("Per length " + arr.Length);
         for (int i = 0; i < arr.Length; i++)
         {
             if (i > 0)
                 arr[i] = arr[i-1] + UnityEngine.Random.Range(0.12f, 0.25f);
             else
                 arr[i] = UnityEngine.Random.Range(0.2f, 0.25f);
-
-            Debug.Log("Period" + i + " " + arr[i]);
         }
         Array.Sort(arr);
         return arr;
