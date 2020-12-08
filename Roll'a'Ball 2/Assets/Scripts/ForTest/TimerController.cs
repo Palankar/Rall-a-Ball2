@@ -13,13 +13,11 @@ public class TimerController : MonoBehaviour
     void Start()
     {
         timerText = GetComponent<TextMeshProUGUI>();
-
         data = new TimerData(0f, 0f); //Конструктор задает значения 0 всем полям
     }
 
     /*
-     * Т.к. по стандарту обновление раз в 2 м/сек - их получить точное число не получится, но можно поменять
-     * частоту обновления на 1 м/сек по Time.fixedDeltaTime по жеданию
+     * По стандарту обновление раз в 2 м/сек 
     */
     void FixedUpdate()
     {
